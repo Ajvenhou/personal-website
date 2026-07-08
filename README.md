@@ -15,6 +15,31 @@ Technologies:
 - JavaScript
 - GitHub Pages (planned)
 
+# suggestion for the website structure
+
+Home
+│
+├── About
+│
+├── Research
+│   ├── Projects
+│   └── Publications
+│
+├── CV
+│
+├── Blog
+│   ├── Research
+│   ├── Conferences
+│   ├── Cycling
+│   ├── Hiking
+│   ├── Travel
+│   └── Other
+│
+├── Links
+│
+└── Contact
+
+
 # folder structure
 
 index.html
@@ -24,3 +49,15 @@ index.html
 ├── assets/
 ├── README.md
 └── .gitignore
+
+# Development philosophy
+
+This website is intended to be a long-term academic portfolio.
+
+Goals:
+
+- Keep content independent from presentation.
+- Prefer simplicity over unnecessary complexity.
+- Build incrementally with meaningful Git commits.
+- Use open standards whenever possible.
+- Make the website easy to maintain for many years.
