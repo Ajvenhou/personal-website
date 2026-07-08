@@ -1,18 +1,13 @@
 # Personal Website TODO
 
-## Phase 1
+# Milestone 1 – Minimal personal academic website
+
 - [ ] Home page
-- [ ] About me
-- [ ] Contact page
-- [ ] Deploy to GitHub Pages
-
-## Phase 2
-- [ ] Publications
-- [ ] CV
-- [ ] Blog
-- [ ] Projects
-
-## Phase 3
-- [ ] Dark mode
-- [ ] Animations
-- [ ] Search
+- [ ] About/introduction section
+- [ ] CV placeholder
+- [ ] Blog placeholder
+- [ ] Research projects placeholder
+- [ ] Activities placeholder
+- [ ] Publications placeholder
+- [ ] Links placeholder
+- [ ] Deploy first version with GitHub Pages
