@@ -16,6 +16,19 @@ I want:
 - And last section should contain links to interesting websites and automatic list of GitHub repositories.
 - In future if I will teach, there will be third section "Education and teaching"
 
+# Vision
+
+The website is intended to be my long-term academic home on the internet.
+
+It should present:
+- who I am,
+- what I work on,
+- how my research evolves,
+- and what I do outside academia.
+
+The website should remain easy to maintain for many years by keeping
+content, presentation, and implementation separate whenever possible.
+
 
 # Ideas reformatted from ChatGPT
 
