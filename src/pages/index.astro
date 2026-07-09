@@ -2,58 +2,73 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Ivo Vinklárek | Personal Website">
-  <main>
-    <section id="home">
-      <h1>Ivo Vinklárek</h1>
-      <p>
-        Personal academic website focused on research, scientific growth,
-        personal reflections, and long-term academic development.
-      </p>
-    </section>
+<Layout
+	title="Ivo Vinklárek | Personal Academic Website"
+	description="Personal academic website for Ivo Vinklárek."
+>
+	<main class="site-main">
+		<section id="welcome" class="site-section" aria-labelledby="welcome-heading">
+			<h1 id="welcome-heading">Welcome</h1>
+			<p>
+				This is the personal academic website of Ivo Vinklárek, a place for
+				research notes, projects, writing, and professional information.
+			</p>
+		</section>
 
-    <section id="about">
-      <h2>About</h2>
-      <p>
-        A short introduction about who I am, my academic path, and the ideas
-        that shape my personal and scientific development.
-      </p>
-    </section>
+		<section id="about" class="site-section" aria-labelledby="about-heading">
+			<h2 id="about-heading">About</h2>
+			<p>
+				A short introduction about my academic path, research interests, and
+				the ideas that shape my scientific development will appear here.
+			</p>
+		</section>
 
-    <section id="research">
-      <h2>Research</h2>
-      <p>
-        Research projects, scientific interests, publications, and ongoing ideas.
-      </p>
-    </section>
+		<section id="research" class="site-section" aria-labelledby="research-heading">
+			<h2 id="research-heading">Research</h2>
+			<p>
+				This section will collect research interests, publications, ongoing
+				work, and notes on scientific questions I am exploring.
+			</p>
+		</section>
 
-    <section id="cv">
-      <h2>CV</h2>
-      <p>
-        Education, academic experience, skills, publications, and professional record.
-      </p>
-    </section>
+		<section id="projects" class="site-section" aria-labelledby="projects-heading">
+			<h2 id="projects-heading">Projects</h2>
+			<p>
+				Selected academic, technical, and personal projects will be listed
+				here with short descriptions and links where useful.
+			</p>
+		</section>
 
-    <section id="blog">
-      <h2>Blog</h2>
-      <p>
-        Notes and reflections on research, conferences, cycling, hiking, travel,
-        and other personal activities.
-      </p>
-    </section>
+		<section id="blog" class="site-section" aria-labelledby="blog-heading">
+			<h2 id="blog-heading">Blog</h2>
+			<p>
+				Notes and reflections on research, conferences, cycling, hiking,
+				travel, and other personal activities will be collected here.
+			</p>
+		</section>
 
-    <section id="links">
-      <h2>Links</h2>
-      <p>
-        Interesting websites, resources, and eventually an automatic list of GitHub repositories.
-      </p>
-    </section>
+		<section id="cv" class="site-section" aria-labelledby="cv-heading">
+			<h2 id="cv-heading">CV</h2>
+			<p>
+				Education, academic experience, skills, publications, and professional
+				records will be summarized in this section.
+			</p>
+		</section>
 
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>
-        Contact information will be added here later.
-      </p>
-    </section>
-  </main>
+		<section id="links" class="site-section" aria-labelledby="links-heading">
+			<h2 id="links-heading">Links</h2>
+			<p>
+				Useful websites, academic resources, profiles, and selected repository
+				links can be gathered here.
+			</p>
+		</section>
+
+		<section id="contact" class="site-section" aria-labelledby="contact-heading">
+			<h2 id="contact-heading">Contact</h2>
+			<p>
+				Contact information and preferred ways to get in touch will be added
+				here later.
+			</p>
+		</section>
+	</main>
 </Layout>
