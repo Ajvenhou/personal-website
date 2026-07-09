@@ -88,7 +88,7 @@ const sectionLinks = [
 				.filter(Boolean);
 
 			const updateActiveSection = () => {
-				const readingLine = window.innerHeight * 0.36;
+				const readingLine = window.innerHeight * 0.24;
 				let activeSection = linkedSections[0];
 
 				for (const section of linkedSections) {
@@ -124,9 +124,11 @@ const sectionLinks = [
 		--link-strong: #17384d;
 		--line: #d8dde2;
 		--soft: #e8ebee;
+		--sidebar-bg: rgba(241, 243, 245, 0.55);
 		--content-width: 700px;
 		--sidebar-width: 200px;
 		--sidebar-gap: 2.5rem;
+		--sidebar-top: 16vh;
 		--page-padding: 1.5rem;
 
 		color: var(--text);
@@ -183,6 +185,7 @@ const sectionLinks = [
 	.content-column {
 		grid-column: 2;
 		min-width: 0;
+		padding-top: clamp(0rem, calc(var(--sidebar-top) - 4rem), 7rem);
 	}
 
 	.site-main {
@@ -226,10 +229,12 @@ const sectionLinks = [
 		grid-column: 3;
 		justify-self: start;
 		position: sticky;
-		top: 24vh;
+		top: var(--sidebar-top);
 		width: var(--sidebar-width);
 		margin-left: var(--sidebar-gap);
-		padding-left: 0.25rem;
+		padding: 1rem 1rem 1.1rem;
+		border-radius: 0.4rem;
+		background: var(--sidebar-bg);
 	}
 
 	.mobile-profile {
@@ -330,6 +335,10 @@ const sectionLinks = [
 
 		.site-sidebar {
 			display: none;
+		}
+
+		.content-column {
+			padding-top: 0;
 		}
 
 		.mobile-profile {
