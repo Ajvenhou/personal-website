@@ -117,14 +117,13 @@ const sectionLinks = [
 
 <style is:global>
 	:root {
-		--page-bg: #fbfbfb;
-		--text: #202124;
-		--muted: #65707a;
-		--link: #285a78;
-		--link-strong: #17384d;
-		--line: #d8dde2;
-		--soft: #e8ebee;
-		--sidebar-bg: rgba(241, 243, 245, 0.55);
+		--background: #ffffff;
+		--surface: #f6f6f6;
+		--text: #171717;
+		--muted: #6a6a6a;
+		--border: #dddddd;
+		--accent: #404040;
+		--surface-strong: #eeeeee;
 		--content-width: 700px;
 		--sidebar-width: 200px;
 		--sidebar-gap: 2.5rem;
@@ -132,11 +131,11 @@ const sectionLinks = [
 		--page-padding: 1.5rem;
 
 		color: var(--text);
-		background: var(--page-bg);
+		background: var(--background);
 		font-family:
 			ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
 			sans-serif;
-		font-size: 16.5px;
+		font-size: 16px;
 		line-height: 1.7;
 	}
 
@@ -145,25 +144,25 @@ const sectionLinks = [
 	}
 
 	html {
-		background: var(--page-bg);
+		background: var(--background);
 	}
 
 	body {
 		margin: 0;
 		min-width: 320px;
-		background: var(--page-bg);
+		background: var(--background);
 		-webkit-font-smoothing: antialiased;
 		text-rendering: optimizeLegibility;
 	}
 
 	a {
-		color: var(--link);
+		color: var(--text);
 		text-decoration-thickness: 1px;
 		text-underline-offset: 0.18em;
 	}
 
 	a:hover {
-		color: var(--link-strong);
+		color: var(--accent);
 	}
 
 	p {
@@ -195,7 +194,7 @@ const sectionLinks = [
 
 	.site-section {
 		padding: 0;
-		margin: 0 0 3.25rem;
+		margin: 0 0 3rem;
 		scroll-margin-top: 1.5rem;
 	}
 
@@ -207,22 +206,22 @@ const sectionLinks = [
 	.site-section h2 {
 		margin: 0 0 0.65rem;
 		color: var(--text);
-		font-weight: 650;
+		font-weight: 620;
 		line-height: 1.2;
 		letter-spacing: 0;
 	}
 
 	.site-section h1 {
-		font-size: 2rem;
+		font-size: 1.85rem;
 	}
 
 	.site-section h2 {
-		font-size: 1.2rem;
+		font-size: 1.15rem;
 	}
 
 	.site-section p {
-		max-width: 66ch;
-		color: #3b4045;
+		max-width: 64ch;
+		color: #343434;
 	}
 
 	.site-sidebar {
@@ -234,7 +233,7 @@ const sectionLinks = [
 		margin-left: var(--sidebar-gap);
 		padding: 1rem 1rem 1.1rem;
 		border-radius: 0.4rem;
-		background: var(--sidebar-bg);
+		background: var(--surface);
 	}
 
 	.mobile-profile {
@@ -249,8 +248,8 @@ const sectionLinks = [
 		aspect-ratio: 1;
 		margin: 0 0 1rem;
 		border-radius: 50%;
-		background: var(--soft);
-		box-shadow: inset 0 0 0 1px rgba(32, 33, 36, 0.08);
+		background: var(--surface-strong);
+		box-shadow: inset 0 0 0 1px var(--border);
 		color: var(--muted);
 		font-family: ui-sans-serif, system-ui, sans-serif;
 		font-size: 1rem;
@@ -274,7 +273,7 @@ const sectionLinks = [
 	}
 
 	.section-nav {
-		border-left: 1px solid var(--line);
+		border-left: 1px solid var(--border);
 		padding-left: 0.9rem;
 	}
 
@@ -297,7 +296,7 @@ const sectionLinks = [
 	}
 
 	.section-nav a:hover {
-		color: var(--link-strong);
+		color: var(--accent);
 		text-decoration: underline;
 	}
 
@@ -314,13 +313,13 @@ const sectionLinks = [
 
 	.site-sidebar .section-nav a.is-active,
 	.site-sidebar .section-nav a[aria-current='location'] {
-		color: var(--text);
+		color: var(--accent);
 		font-weight: 650;
 	}
 
 	.site-sidebar .section-nav a.is-active::before,
 	.site-sidebar .section-nav a[aria-current='location']::before {
-		background: var(--link);
+		background: var(--accent);
 	}
 
 	@media (max-width: 760px) {
@@ -345,7 +344,7 @@ const sectionLinks = [
 			display: block;
 			padding-bottom: 1.35rem;
 			margin-bottom: 2.25rem;
-			border-bottom: 1px solid var(--line);
+			border-bottom: 1px solid var(--border);
 		}
 
 		.mobile-profile-row {
@@ -383,7 +382,7 @@ const sectionLinks = [
 		}
 
 		.mobile-nav a {
-			color: var(--link);
+			color: var(--text);
 			font-size: 0.9rem;
 		}
 
