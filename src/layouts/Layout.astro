@@ -124,6 +124,10 @@ const sectionLinks = [
 		--link-strong: #17384d;
 		--line: #d8dde2;
 		--soft: #e8ebee;
+		--content-width: 700px;
+		--sidebar-width: 200px;
+		--sidebar-gap: 2.5rem;
+		--page-padding: 1.5rem;
 
 		color: var(--text);
 		background: var(--page-bg);
@@ -166,20 +170,24 @@ const sectionLinks = [
 
 	.site-shell {
 		display: grid;
-		grid-template-columns: minmax(0, 700px) 220px;
-		gap: 5rem;
-		width: min(100%, 1060px);
-		margin: 0 auto;
-		padding: 4rem 1.5rem 5rem;
+		grid-template-columns:
+			minmax(calc(var(--sidebar-width) + var(--sidebar-gap)), 1fr)
+			minmax(0, var(--content-width))
+			minmax(calc(var(--sidebar-width) + var(--sidebar-gap)), 1fr);
+		width: 100%;
+		margin: 0;
+		padding: 4rem var(--page-padding) 5rem;
 		align-items: start;
 	}
 
 	.content-column {
+		grid-column: 2;
 		min-width: 0;
 	}
 
 	.site-main {
-		max-width: 720px;
+		max-width: var(--content-width);
+		padding-bottom: 60vh;
 	}
 
 	.site-section {
@@ -215,8 +223,12 @@ const sectionLinks = [
 	}
 
 	.site-sidebar {
+		grid-column: 3;
+		justify-self: start;
 		position: sticky;
 		top: 24vh;
+		width: var(--sidebar-width);
+		margin-left: var(--sidebar-gap);
 		padding-left: 0.25rem;
 	}
 
@@ -368,6 +380,7 @@ const sectionLinks = [
 
 		.site-main {
 			max-width: none;
+			padding-bottom: 1rem;
 		}
 
 		.site-section {
@@ -376,6 +389,30 @@ const sectionLinks = [
 
 		.site-section h1 {
 			font-size: 1.75rem;
+		}
+	}
+
+	@media (min-width: 761px) and (max-width: 1228px) {
+		.site-shell {
+			grid-template-columns: minmax(0, var(--content-width)) var(--sidebar-width);
+			column-gap: var(--sidebar-gap);
+			width: min(
+				100%,
+				calc(
+					var(--content-width) + var(--sidebar-gap) + var(--sidebar-width) +
+						3rem
+				)
+			);
+			margin: 0 auto;
+		}
+
+		.content-column,
+		.site-sidebar {
+			grid-column: auto;
+		}
+
+		.site-sidebar {
+			margin-left: 0;
 		}
 	}
 </style>
