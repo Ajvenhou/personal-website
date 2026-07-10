@@ -7,7 +7,7 @@ draft: true
 ---
 # Info
 - A short report from the successful summit of Zugspitze (2962 m).
-- Description of the climbing route with notes about the via Ferrata on the ... and
+- Description of the climbing route with few notes about via Ferrata across Höllental and the way back through the Partnach valley
 - Final ideas about the whole campaign and important take-home messages.
 
 # Report
@@ -43,9 +43,9 @@ Finally, I noticed that I am 50 meters from the summit. H. was already waiting f
 
 After roughly 10 kilometers close to Knorr Hut we found out that the current route is indeed technically much easier. However, we have to go another 20 kilomers, which practically means that we will have 40 kilometers expedition in quite hard terrain. Well, there was no other option. Luckilly, we did not have to climb any other mountain, and so we were just walking along the river Partnach to the town Garmisch-Partenkirchen. I felt suprisingly a lot of energy, however, my hard boots and almost zero preparation start to taken its tax. At thirtieth kilometer I started to feel blisters all over both my feets. And the last five kilometers were just pure pain. Thanks god H. was wearing running shoes which in the end were much better choice for our fast walk. And therefore, when I got to Garmisch-Partenkirchen, we agreed that he will walk faster to the car and I will walk towards the train station, where he will deliver me my large backpack fot the way back to HH. All was done as agreed, we made a farewell and I took the night train to HH at 10 pm.
 
-The travel back was harder for my fellow companions than for me. I tried to clean myself in the bathroom, but still-- sorry to the lady sitting close to me. I dont have to add that the whole sunday I was walking like a cowboy until my blisters healed themself.
+The travel back was harder for my fellow companions than for me. I tried to clean myself in the train bathroom, but still---sorry to the lady sitting close to me. Also, the whole Sunday I was walking like a cowboy until my blisters healed themself.
 
-Overall, this expedition was much more than I expected and I learned far more than I wanted for the first true mountainering experrience.
+Overall, this expedition was much more than I expected and I learned far more than I wanted for the first true mountainering experrience. 
 
 # Photos 
 -
