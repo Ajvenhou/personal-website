@@ -12,7 +12,6 @@ draft: true
 - Final ideas about the whole campaign and important take-home messages.
 
 # Report
-
 Some time ago, I had a vision to climb the Matterhorn (Switzerland). However, I do not have enough
 experience to climb it safely. In the past, I was regularly visiting climbing walls, but I never
 climbed anything above level 7. Moreover, during the last years in HH, I was mainly cycling and
@@ -87,6 +86,10 @@ walking like a cowboy until my blisters healed themself.
 
 Overall, this expedition was much more than I expected and I learned far more than I wanted for the
 first true mountainering experrience. 
+
+# Quick notes
+- Take home experience: Support rope for sitting on the wall. Better check of the routes. One day of
+  acclimatization for mountains around 3000 m.
 
 # Photos 
 -
