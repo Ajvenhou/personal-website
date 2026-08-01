@@ -1,6 +1,6 @@
 ---
 title: A little expedition up to Zugspitze
-description: Opening blog note.
+description: A short notes and strory about an expedition to Zugspitze
 date: 2026-06-20
 draft: true
 
