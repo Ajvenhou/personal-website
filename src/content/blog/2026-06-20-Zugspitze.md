@@ -1,5 +1,5 @@
 ---
-title: A little expedition up to Zugspitze
+title: A short expedition up to Zugspitze
 description: Notes and a short story about an expedition to Zugspitze.
 date: 2026-06-20
 draft: true
