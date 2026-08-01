@@ -4,9 +4,10 @@ import Layout from '../layouts/Layout.astro';
 
 const pageIds = ['home', 'about', 'research', 'cv', 'links', 'contact'] as const;
 const entries = await Promise.all(pageIds.map((id) => getEntry('pages', id)));
+const publicationList = await getEntry('publications', 'publication-list');
 
-if (entries.some((entry) => !entry)) {
-	throw new Error('One or more required homepage content files are missing.');
+if (entries.some((entry) => !entry) || !publicationList) {
+	throw new Error('One or more required homepage content entries are missing.');
 }
 
 const [home, about, research, cv, links, contact] = entries;
@@ -17,6 +18,7 @@ const [HomeContent, AboutContent, ResearchContent, CvContent, LinksContent, Cont
 			return Content;
 		}),
 	);
+const { Content: PublicationListContent } = await render(publicationList);
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
@@ -66,6 +68,26 @@ const dateFormatter = new Intl.DateTimeFormat('en-GB', {
 			</ul>
 		</section>
 
+		<section id="cv" class="site-section" aria-labelledby="cv-heading">
+			<details class="cv-details">
+				<summary class="cv-summary">
+					<h2 id="cv-heading">{cv!.data.title}</h2>
+					<span class="cv-arrow cv-arrow-closed" aria-hidden="true">↓</span>
+					<span class="cv-arrow cv-arrow-open" aria-hidden="true">↑</span>
+				</summary>
+				<div class="prose"><CvContent /></div>
+			</details>
+		</section>
+
+		<section
+			id="publications"
+			class="site-section"
+			aria-labelledby="publications-heading"
+		>
+			<h2 id="publications-heading">{publicationList.data.title}</h2>
+			<div class="prose"><PublicationListContent /></div>
+		</section>
+
 		<section id="blog" class="site-section" aria-labelledby="blog-heading">
 			<h2 id="blog-heading">Blog</h2>
 			<ul class="entry-list">
@@ -83,11 +105,6 @@ const dateFormatter = new Intl.DateTimeFormat('en-GB', {
 				}
 			</ul>
 			<a class="text-link" href="/blog/">View all blog posts</a>
-		</section>
-
-		<section id="cv" class="site-section" aria-labelledby="cv-heading">
-			<h2 id="cv-heading">{cv!.data.title}</h2>
-			<div class="prose"><CvContent /></div>
 		</section>
 
 		<section id="links" class="site-section" aria-labelledby="links-heading">

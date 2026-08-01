@@ -15,8 +15,9 @@ const sectionLinks = [
 	{ href: `${homePrefix}#about`, label: 'About' },
 	{ href: `${homePrefix}#research`, label: 'Research' },
 	{ href: `${homePrefix}#projects`, label: 'Projects' },
-	{ href: `${homePrefix}#blog`, label: 'Blog' },
 	{ href: `${homePrefix}#cv`, label: 'CV' },
+	{ href: `${homePrefix}#publications`, label: 'Publication List' },
+	{ href: `${homePrefix}#blog`, label: 'Blog' },
 	{ href: `${homePrefix}#links`, label: 'Links' },
 	{ href: `${homePrefix}#contact`, label: 'Contact' },
 ];
@@ -224,6 +225,44 @@ const sectionLinks = [
 	.site-section p {
 		max-width: 64ch;
 		color: #343434;
+	}
+
+	.cv-summary {
+		display: flex;
+		align-items: baseline;
+		width: fit-content;
+		cursor: pointer;
+		list-style: none;
+	}
+
+	.cv-summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.cv-summary::marker {
+		content: '';
+	}
+
+	.cv-summary:focus-visible {
+		border-radius: 0.15rem;
+		outline: 2px solid var(--accent);
+		outline-offset: 0.2rem;
+	}
+
+	.cv-arrow {
+		margin-left: 0.4rem;
+		color: var(--muted);
+		font-size: 0.82rem;
+		line-height: 1;
+	}
+
+	.cv-arrow-open,
+	.cv-details[open] .cv-arrow-closed {
+		display: none;
+	}
+
+	.cv-details[open] .cv-arrow-open {
+		display: inline;
 	}
 
 	.site-sidebar {

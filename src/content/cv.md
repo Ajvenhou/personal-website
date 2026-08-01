@@ -3,10 +3,6 @@ title: Curriculum Vitae
 description: Education, research experience, awards, supervision, and academic service.
 ---
 
-## Publication list
-
-- [Google Scholar](https://scholar.google.de/citations?user=hXFHfxoAAAAJ&hl=en)
-
 ## Education
 
 - **2018–2022 — Ph.D. in Chemical Physics**, Faculty of Mathematics and Physics, Charles
