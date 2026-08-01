@@ -81,7 +81,7 @@ export const blogMediaByPostId: Record<string, BlogMedia> = {
 			image: zugspitzeHero,
 			alt: 'Hiking boots fitted with red shoe spikes resting on the snow of the Höllentalferner.',
 			position: 'center 58%',
-			title: 'An expedition to Zugspitze',
+			title: 'A one-day expedition to Zugspitze',
 		},
 		gallery: [
 			{
