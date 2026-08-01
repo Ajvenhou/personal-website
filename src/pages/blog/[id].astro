@@ -1,5 +1,8 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BlogHero from '../../components/BlogHero.astro';
+import ImageGallery from '../../components/ImageGallery.astro';
+import { blogMediaByPostId } from '../../data/blogImages';
 import Layout from '../../layouts/Layout.astro';
 
 export async function getStaticPaths() {
@@ -16,6 +19,8 @@ interface Props {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+const blogMedia = blogMediaByPostId[post.id.toLowerCase()];
+const hasOverlayTitle = Boolean(blogMedia?.hero.title);
 const formattedDate = new Intl.DateTimeFormat('en-GB', {
 	day: 'numeric',
 	month: 'long',
@@ -29,16 +34,41 @@ const formattedDate = new Intl.DateTimeFormat('en-GB', {
 >
 	<main class="site-main">
 		<article>
-			<header class="page-header">
+			<header class:list={['page-header', { 'page-header--overlay-title': hasOverlayTitle }]}>
 				<p><a class="text-link" href="/blog/">← Blog</a></p>
-				<h1>{post.data.title}</h1>
+				{!hasOverlayTitle && <h1>{post.data.title}</h1>}
 				<p class="page-date">
 					{formattedDate}
 					{post.data.draft && <span class="status-label">Draft</span>}
 				</p>
-				<p class="page-description">{post.data.description}</p>
+				{!hasOverlayTitle && <p class="page-description">{post.data.description}</p>}
 			</header>
+			{blogMedia && <BlogHero {...blogMedia.hero} />}
+			{hasOverlayTitle && <p class="page-description hero-description">{post.data.description}</p>}
 			<div class="prose"><Content /></div>
+			{
+				blogMedia && (
+					<ImageGallery
+						images={blogMedia.gallery}
+						label={`${post.data.title} photo gallery`}
+						variant={blogMedia.galleryVariant}
+					/>
+				)
+			}
 		</article>
 	</main>
 </Layout>
+
+<style>
+	.page-header--overlay-title {
+		margin-bottom: 0.85rem;
+	}
+
+	.page-header--overlay-title .page-date {
+		margin-bottom: 0;
+	}
+
+	.hero-description {
+		margin-bottom: 2rem;
+	}
+</style>

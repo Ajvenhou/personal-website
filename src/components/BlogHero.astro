@@ -1,0 +1,102 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+	image: ImageMetadata;
+	alt: string;
+	position?: string;
+	title?: string;
+}
+
+const { image, alt, position = 'center', title } = Astro.props;
+---
+
+<div class:list={['blog-hero', { 'blog-hero--title-overlay': title }]} style={`--blog-hero-position: ${position}`}>
+	<div class="blog-hero-visual">
+		<Image
+			src={image}
+			alt={alt}
+			widths={[480, 700, 1024, 1400]}
+			sizes="(max-width: 760px) calc(100vw - 2.3rem), 700px"
+			quality="high"
+			loading="eager"
+			fetchpriority="high"
+			class="blog-hero-image"
+		/>
+		{
+			title && (
+				<div class="blog-hero-overlay">
+					<h1>{title}</h1>
+				</div>
+			)
+		}
+	</div>
+</div>
+
+<style>
+	.blog-hero {
+		width: 100%;
+		margin: 0 0 2.25rem;
+	}
+
+	.blog-hero-visual {
+		position: relative;
+		width: 100%;
+		overflow: hidden;
+		border-radius: 0.4rem;
+	}
+
+	.blog-hero-image {
+		display: block;
+		width: 100%;
+		aspect-ratio: 16 / 7;
+		object-fit: cover;
+		object-position: var(--blog-hero-position, center);
+	}
+
+	.blog-hero--title-overlay {
+		margin-bottom: 0.9rem;
+	}
+
+	.blog-hero--title-overlay .blog-hero-visual,
+	.blog-hero--title-overlay .blog-hero-image {
+		height: clamp(220px, 34vw, 300px);
+		aspect-ratio: auto;
+	}
+
+	.blog-hero-overlay {
+		display: flex;
+		align-items: flex-end;
+		position: absolute;
+		inset: 0;
+		padding: clamp(1.1rem, 4vw, 1.75rem);
+		background: linear-gradient(to bottom, transparent 42%, rgb(0 0 0 / 0.7) 100%);
+	}
+
+	.blog-hero-overlay h1 {
+		max-width: 18ch;
+		margin: 0;
+		color: #ffffff;
+		font-size: clamp(1.45rem, 4vw, 2rem);
+		font-weight: 580;
+		line-height: 1.15;
+		letter-spacing: -0.015em;
+		text-wrap: balance;
+	}
+
+	@media (max-width: 760px) {
+		.blog-hero {
+			margin-bottom: 1.85rem;
+		}
+
+		.blog-hero-image {
+			aspect-ratio: 16 / 8;
+		}
+
+		.blog-hero--title-overlay .blog-hero-visual,
+		.blog-hero--title-overlay .blog-hero-image {
+			height: clamp(210px, 66vw, 260px);
+			aspect-ratio: auto;
+		}
+	}
+</style>

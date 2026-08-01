@@ -1,5 +1,5 @@
 ---
-title: A one-day expedition up to Zugspitze
+title: An expedition to Zugspitze
 description: A short story about an expedition up to the Zugspitze summit and notes for the future.
 date: 2026-06-20
 draft: true
@@ -93,4 +93,3 @@ my first true mountaineering experience.
   one day of acclimatization for mountains around 3000 m.
 
 # Photos 
--
