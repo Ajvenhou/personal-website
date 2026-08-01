@@ -89,7 +89,9 @@ Overall, this expedition was much more than I expected, and I learned far more t
 my first true mountaineering experience.
 
 # Quick notes
-- Take-home experiences: Support rope for sitting on the wall. Better check of the routes. At least
-  one day of acclimatization for mountains around 3000 m.
+- Take-home experiences: 
+  - Support rope for sitting on the wall. 
+  - Better check of the routes. 
+  - At least one day of acclimatization for mountains around 3000 m.
 
 # Photos 
