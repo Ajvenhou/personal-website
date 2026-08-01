@@ -1,0 +1,32 @@
+---
+interface Props {
+	href: string;
+	label: string;
+}
+
+const { href, label } = Astro.props;
+---
+
+<a class="back-link" href={href}>{label}</a>
+
+<style>
+	.back-link {
+		display: inline-block;
+		color: var(--muted);
+		font-size: 0.9rem;
+	}
+
+	.back-link:visited {
+		color: var(--muted);
+	}
+
+	.back-link:hover {
+		color: var(--accent);
+	}
+
+	.back-link:focus-visible {
+		border-radius: 0.15rem;
+		outline: 2px solid var(--accent);
+		outline-offset: 0.2rem;
+	}
+</style>

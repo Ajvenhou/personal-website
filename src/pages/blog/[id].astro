@@ -1,24 +1,35 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BackLink from '../../components/BackLink.astro';
 import BlogHero from '../../components/BlogHero.astro';
+import BlogTableOfContents from '../../components/BlogTableOfContents.astro';
 import ImageGallery from '../../components/ImageGallery.astro';
+import PostNavigation from '../../components/PostNavigation.astro';
 import { blogMediaByPostId } from '../../data/blogImages';
 import Layout from '../../layouts/Layout.astro';
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
-	return posts.map((post) => ({
+	const posts = (await getCollection('blog')).sort(
+		(a, b) => a.data.date.valueOf() - b.data.date.valueOf(),
+	);
+	return posts.map((post, index) => ({
 		params: { id: post.id },
-		props: { post },
+		props: {
+			post,
+			previousPost: posts[index - 1],
+			nextPost: posts[index + 1],
+		},
 	}));
 }
 
 interface Props {
 	post: CollectionEntry<'blog'>;
+	previousPost?: CollectionEntry<'blog'>;
+	nextPost?: CollectionEntry<'blog'>;
 }
 
-const { post } = Astro.props;
-const { Content } = await render(post);
+const { post, previousPost, nextPost } = Astro.props;
+const { Content, headings } = await render(post);
 const blogMedia = blogMediaByPostId[post.id.toLowerCase()];
 const hasOverlayTitle = Boolean(blogMedia?.hero.title);
 const formattedDate = new Intl.DateTimeFormat('en-GB', {
@@ -26,16 +37,44 @@ const formattedDate = new Intl.DateTimeFormat('en-GB', {
 	month: 'long',
 	year: 'numeric',
 }).format(post.data.date);
+const meaningfulSectionTitles = new Set(
+	post.body
+		.split(/^##\s+/m)
+		.slice(1)
+		.map((section) => {
+			const [headingLine = '', ...sectionLines] = section.split('\n');
+			return {
+				title: headingLine.replace(/\s+#+\s*$/, '').trim(),
+				content: sectionLines.join('\n').trim(),
+			};
+		})
+		.filter(
+			(section) =>
+				section.content.length > 0 ||
+				(section.title === 'Photos' && Boolean(blogMedia?.gallery.length)),
+		)
+		.map((section) => section.title),
+);
+const tocHeadings = headings.filter(
+	(heading) => heading.depth === 2 && meaningfulSectionTitles.has(heading.text.trim()),
+);
+const previous = previousPost
+	? { href: `/blog/${previousPost.id}/`, title: previousPost.data.title }
+	: undefined;
+const next = nextPost
+	? { href: `/blog/${nextPost.id}/`, title: nextPost.data.title }
+	: undefined;
 ---
 
 <Layout
 	title={`${post.data.title} | Ivo S. Vinklárek`}
 	description={post.data.description}
 >
+	<BlogTableOfContents slot="sidebar" headings={tocHeadings} date={formattedDate} />
 	<main class="site-main">
 		<article>
 			<header class:list={['page-header', { 'page-header--overlay-title': hasOverlayTitle }]}>
-				<p><a class="text-link blog-back-link" href="/blog/">← Back to Blog</a></p>
+				<p><BackLink href="/blog/" label="← Back to Blog" /></p>
 				{!hasOverlayTitle && <h1>{post.data.title}</h1>}
 				<p class="page-date">
 					{formattedDate}
@@ -43,9 +82,10 @@ const formattedDate = new Intl.DateTimeFormat('en-GB', {
 				</p>
 				{!hasOverlayTitle && <p class="page-description">{post.data.description}</p>}
 			</header>
+			<BlogTableOfContents headings={tocHeadings} date={formattedDate} mobile />
 			{blogMedia && <BlogHero {...blogMedia.hero} />}
 			{hasOverlayTitle && <p class="page-description hero-description">{post.data.description}</p>}
-			<div class="prose"><Content /></div>
+			<div class="prose post-content"><Content /></div>
 			{
 				blogMedia && (
 					<ImageGallery
@@ -56,29 +96,12 @@ const formattedDate = new Intl.DateTimeFormat('en-GB', {
 					/>
 				)
 			}
+			<PostNavigation previous={previous} next={next} />
 		</article>
 	</main>
 </Layout>
 
 <style>
-	.blog-back-link {
-		color: var(--muted);
-	}
-
-	.blog-back-link:visited {
-		color: var(--muted);
-	}
-
-	.blog-back-link:hover {
-		color: var(--accent);
-	}
-
-	.blog-back-link:focus-visible {
-		border-radius: 0.15rem;
-		outline: 2px solid var(--accent);
-		outline-offset: 0.2rem;
-	}
-
 	.page-header--overlay-title {
 		margin-bottom: 0.85rem;
 	}
@@ -89,5 +112,15 @@ const formattedDate = new Intl.DateTimeFormat('en-GB', {
 
 	.hero-description {
 		margin-bottom: 2rem;
+	}
+
+	.post-content :global(h2) {
+		scroll-margin-top: var(--sidebar-top);
+	}
+
+	@media (max-width: 760px) {
+		.post-content :global(h2) {
+			scroll-margin-top: 1.5rem;
+		}
 	}
 </style>

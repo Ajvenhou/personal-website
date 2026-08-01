@@ -13,6 +13,7 @@ const {
 } = Astro.props;
 
 const homePrefix = Astro.url.pathname === '/' ? '' : '/';
+const hasContextSidebar = Astro.slots.has('sidebar');
 
 const sectionLinks = [
 	{ href: `${homePrefix}#about`, label: 'About' },
@@ -56,7 +57,7 @@ const sectionLinks = [
 						<p class="profile-description">Personal academic website</p>
 					</div>
 				</div>
-				<nav class="section-nav mobile-nav" aria-label="Homepage sections">
+				<nav class="section-nav mobile-nav" aria-label="Homepage sections" data-homepage-nav>
 					<ul>
 						{
 							sectionLinks.map((link) => (
@@ -73,40 +74,48 @@ const sectionLinks = [
 				<slot />
 			</div>
 
-			<aside class="site-sidebar" aria-label="Profile and section navigation">
-				<div class="profile-photo">
-					<Image
-						src={profilePhoto}
-						alt="Portrait of Ivo S. Vinklárek wearing a cycling helmet"
-						widths={[160, 320, 480]}
-						sizes="152px"
-						quality="high"
-						class="profile-photo-image"
-					/>
-				</div>
-				<p class="profile-name"><a href="/">Ivo S. Vinklárek</a></p>
-				<p class="profile-description">Personal academic website</p>
-				<nav class="section-nav" aria-label="Homepage sections">
-					<ul>
-						{
-							sectionLinks.map((link) => (
-								<li>
-									<a href={link.href}>{link.label}</a>
-								</li>
-							))
-						}
-					</ul>
-				</nav>
+			<aside class="site-sidebar" aria-label={hasContextSidebar ? 'Page navigation' : 'Profile and section navigation'}>
+				{
+					hasContextSidebar ? (
+						<slot name="sidebar" />
+					) : (
+						<>
+							<div class="profile-photo">
+								<Image
+									src={profilePhoto}
+									alt="Portrait of Ivo S. Vinklárek wearing a cycling helmet"
+									widths={[160, 320, 480]}
+									sizes="152px"
+									quality="high"
+									class="profile-photo-image"
+								/>
+							</div>
+							<p class="profile-name"><a href="/">Ivo S. Vinklárek</a></p>
+							<p class="profile-description">Personal academic website</p>
+							<nav class="section-nav" aria-label="Homepage sections" data-homepage-nav>
+								<ul>
+									{
+										sectionLinks.map((link) => (
+											<li>
+												<a href={link.href}>{link.label}</a>
+											</li>
+										))
+									}
+								</ul>
+							</nav>
+						</>
+					)
+				}
 			</aside>
 		</div>
 
 		<script>
 			const sidebar = document.querySelector('.site-sidebar');
 			const sidebarLinks = Array.from(
-				document.querySelectorAll('.site-sidebar .section-nav a[href^="#"]'),
+				document.querySelectorAll('.site-sidebar [data-homepage-nav] a[href^="#"]'),
 			);
 			const navigationLinks = Array.from(
-				document.querySelectorAll('.section-nav a[href^="#"]'),
+				document.querySelectorAll('[data-homepage-nav] a[href^="#"]'),
 			);
 			const linkedSections = sidebarLinks
 				.map((link) => {

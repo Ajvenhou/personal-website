@@ -1,0 +1,126 @@
+---
+interface ArchiveMonth {
+	id: string;
+	label: string;
+}
+
+interface ArchiveYear {
+	id: string;
+	label: string;
+	months: ArchiveMonth[];
+}
+
+interface Props {
+	years: ArchiveYear[];
+	mobile?: boolean;
+}
+
+const { years, mobile = false } = Astro.props;
+---
+
+{
+	mobile ? (
+		<details class="context-menu context-menu--mobile">
+			<summary>Archive</summary>
+			<nav aria-label="Blog archive">
+				<ul>
+					{years.map((year) => (
+						<li>
+							<a href={`#${year.id}`}>{year.label}</a>
+							<ul>
+								{year.months.map((month) => <li><a href={`#${month.id}`}>{month.label}</a></li>)}
+							</ul>
+						</li>
+					))}
+				</ul>
+			</nav>
+		</details>
+	) : (
+		<nav class="context-menu" aria-labelledby="blog-archive-heading">
+			<h2 id="blog-archive-heading">Blog archive</h2>
+			<ul>
+				{years.map((year) => (
+					<li>
+						<a href={`#${year.id}`}>{year.label}</a>
+						<ul>
+							{year.months.map((month) => <li><a href={`#${month.id}`}>{month.label}</a></li>)}
+						</ul>
+					</li>
+				))}
+			</ul>
+		</nav>
+	)
+}
+
+<style>
+	.context-menu h2 {
+		margin: 0 0 0.65rem;
+		font-size: 0.9rem;
+		font-weight: 650;
+		line-height: 1.35;
+	}
+
+	.context-menu ul {
+		padding: 0;
+		margin: 0;
+		list-style: none;
+	}
+
+	.context-menu > ul,
+	.context-menu nav > ul {
+		display: grid;
+		gap: 0.4rem;
+	}
+
+	.context-menu ul ul {
+		display: grid;
+		gap: 0.15rem;
+		padding-left: 0.8rem;
+		margin-top: 0.15rem;
+		border-left: 1px solid var(--border);
+	}
+
+	.context-menu a {
+		color: var(--muted);
+		font-size: 0.86rem;
+		line-height: 1.4;
+		text-decoration: none;
+	}
+
+	.context-menu a:hover {
+		color: var(--accent);
+		text-decoration: underline;
+	}
+
+	.context-menu a:focus-visible,
+	.context-menu summary:focus-visible {
+		border-radius: 0.15rem;
+		outline: 2px solid var(--accent);
+		outline-offset: 0.2rem;
+	}
+
+	.context-menu--mobile {
+		display: none;
+		padding: 0.65rem 0.8rem;
+		margin: 0 0 1.75rem;
+		border: 1px solid var(--border);
+		border-radius: 0.35rem;
+	}
+
+	.context-menu--mobile summary {
+		color: var(--text);
+		font-size: 0.9rem;
+		font-weight: 600;
+		cursor: pointer;
+	}
+
+	.context-menu--mobile nav {
+		padding-top: 0.65rem;
+	}
+
+	@media (max-width: 760px) {
+		.context-menu--mobile {
+			display: block;
+		}
+	}
+</style>

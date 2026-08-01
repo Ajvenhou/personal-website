@@ -1,5 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
+import BackLink from '../../components/BackLink.astro';
+import BlogArchive from '../../components/BlogArchive.astro';
 import Layout from '../../layouts/Layout.astro';
 
 const posts = (await getCollection('blog')).sort(
@@ -10,13 +12,40 @@ const dateFormatter = new Intl.DateTimeFormat('en-GB', {
 	month: 'long',
 	year: 'numeric',
 });
+const monthFormatter = new Intl.DateTimeFormat('en-GB', { month: 'long' });
+
+const archiveMap = new Map<number, Map<number, typeof posts>>();
+for (const post of posts) {
+	const year = post.data.date.getFullYear();
+	const month = post.data.date.getMonth();
+	if (!archiveMap.has(year)) archiveMap.set(year, new Map());
+	const months = archiveMap.get(year)!;
+	if (!months.has(month)) months.set(month, []);
+	months.get(month)!.push(post);
+}
+
+const archiveYears = Array.from(archiveMap.entries())
+	.sort(([yearA], [yearB]) => yearB - yearA)
+	.map(([year, months]) => ({
+		id: `archive-${year}`,
+		label: String(year),
+		months: Array.from(months.entries())
+			.sort(([monthA], [monthB]) => monthB - monthA)
+			.map(([month, monthPosts]) => ({
+				id: `archive-${year}-${String(month + 1).padStart(2, '0')}`,
+				label: monthFormatter.format(new Date(year, month, 1)),
+				posts: monthPosts,
+			})),
+	}));
 ---
 
 <Layout
 	title="Blog | Ivo S. Vinklárek"
 	description="Expedition reports, travel notes, and other writing by Ivo S. Vinklárek."
 >
+	<BlogArchive slot="sidebar" years={archiveYears} />
 	<main class="site-main">
+		<p class="blog-index-back"><BackLink href="/" label="← Back to homepage" /></p>
 		<header class="page-header">
 			<h1>Blog</h1>
 			<p class="page-description">
@@ -24,19 +53,79 @@ const dateFormatter = new Intl.DateTimeFormat('en-GB', {
 				works in progress.
 			</p>
 		</header>
-		<ul class="entry-list">
+		<BlogArchive years={archiveYears} mobile />
+		<div class="archive-groups">
 			{
-				posts.map((post) => (
-					<li>
-						<h2>
-							<a href={`/blog/${post.id}/`}>{post.data.title}</a>
-							{post.data.draft && <span class="status-label">Draft</span>}
-						</h2>
-						<p class="entry-meta">{dateFormatter.format(post.data.date)}</p>
-						<p class="entry-description">{post.data.description}</p>
-					</li>
+				archiveYears.map((year) => (
+					<section class="archive-year" id={year.id} aria-labelledby={`${year.id}-heading`}>
+						<h2 id={`${year.id}-heading`}>{year.label}</h2>
+						{year.months.map((month) => (
+							<section class="archive-month" id={month.id} aria-labelledby={`${month.id}-heading`}>
+								<h3 id={`${month.id}-heading`}>{month.label}</h3>
+								<ul class="entry-list archive-posts">
+									{month.posts.map((post) => (
+										<li>
+											<h4>
+												<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+												{post.data.draft && <span class="status-label">Draft</span>}
+											</h4>
+											<p class="entry-meta">{dateFormatter.format(post.data.date)}</p>
+											<p class="entry-description">{post.data.description}</p>
+										</li>
+									))}
+								</ul>
+							</section>
+						))}
+					</section>
 				))
 			}
-		</ul>
+		</div>
+		<p class="blog-index-back blog-index-back--bottom"><BackLink href="/" label="← Back to homepage" /></p>
 	</main>
 </Layout>
+
+<style>
+	.blog-index-back {
+		margin-bottom: 1rem;
+	}
+
+	.blog-index-back--bottom {
+		padding-top: 1.25rem;
+		margin: 2.5rem 0 0;
+		border-top: 1px solid var(--border);
+	}
+
+	.archive-year,
+	.archive-month {
+		scroll-margin-top: var(--sidebar-top);
+	}
+
+	.archive-year > h2 {
+		margin: 0 0 1rem;
+		font-size: 1.2rem;
+	}
+
+	.archive-month {
+		margin-bottom: 2.5rem;
+	}
+
+	.archive-month > h3 {
+		margin: 0 0 0.85rem;
+		color: var(--muted);
+		font-size: 0.95rem;
+		font-weight: 600;
+	}
+
+	.archive-posts h4 {
+		margin: 0 0 0.15rem;
+		font-size: 1rem;
+		line-height: 1.4;
+	}
+
+	@media (max-width: 760px) {
+		.archive-year,
+		.archive-month {
+			scroll-margin-top: 1.5rem;
+		}
+	}
+</style>

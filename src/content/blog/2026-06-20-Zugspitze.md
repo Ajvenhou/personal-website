@@ -5,13 +5,13 @@ date: 2026-06-20
 draft: false
 
 ---
-# Content
+## Content
 - A short report from the summit of Zugspitze (2962 m).
 - Description of the climbing route with a few notes about *via Ferrata* across Höllental and the way
   back through the Partnach valley.
 - Final ideas about the whole campaign and important take-home messages.
 
-# Report
+## Report
 Some time ago, I had a vision to climb the Matterhorn (Switzerland). However, I do not have enough
 experience to climb it safely at the moment. In the past, I regularly visited climbing walls,
 but I never climbed anything above level 7. Moreover, over the last few years in HH, I have mainly been
@@ -88,10 +88,10 @@ walking like a cowboy until my blisters healed.
 Overall, this expedition was much more than I expected, and I learned far more than I wanted to from
 my first true mountaineering experience.
 
-# Quick notes
+## Quick notes
 - Take-home experiences: 
   - Support rope for sitting on the wall. 
   - Better check of the routes. 
   - At least one day of acclimatization for mountains around 3000 m.
 
-# Photos 
+## Photos

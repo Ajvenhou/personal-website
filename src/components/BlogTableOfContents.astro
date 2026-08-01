@@ -1,0 +1,161 @@
+---
+interface TocHeading {
+	slug: string;
+	text: string;
+}
+
+interface Props {
+	headings: TocHeading[];
+	date: string;
+	mobile?: boolean;
+}
+
+const { headings, date, mobile = false } = Astro.props;
+---
+
+{
+	mobile ? (
+		<details class="post-contents post-contents--mobile" data-post-toc>
+			<summary>Contents</summary>
+			<nav aria-label="On this page">
+				<ul>
+					{headings.map((heading) => <li><a href={`#${heading.slug}`} data-toc-link>{heading.text}</a></li>)}
+				</ul>
+			</nav>
+		</details>
+	) : (
+		<div class="post-contents" data-post-toc>
+			<nav aria-labelledby="post-contents-heading">
+				<h2 id="post-contents-heading">On this page</h2>
+				<ul>
+					{headings.map((heading) => <li><a href={`#${heading.slug}`} data-toc-link>{heading.text}</a></li>)}
+				</ul>
+			</nav>
+			<p class="post-contents-date">{date}</p>
+		</div>
+	)
+}
+
+<script>
+	const tocLinks = Array.from(document.querySelectorAll('[data-toc-link]'));
+	const tocHeadings = tocLinks
+		.map((link) => {
+			const href = link.getAttribute('href');
+			return href?.startsWith('#') ? document.getElementById(href.slice(1)) : null;
+		})
+		.filter(Boolean);
+
+	const setActiveTocHeading = (heading) => {
+		for (const link of tocLinks) {
+			const isActive = link.getAttribute('href') === `#${heading?.id}`;
+			link.classList.toggle('is-active', isActive);
+			if (isActive) link.setAttribute('aria-current', 'location');
+			else link.removeAttribute('aria-current');
+		}
+	};
+
+	const updateActiveTocHeading = () => {
+		if (tocHeadings.length === 0) return;
+		const desktopSidebar = document.querySelector('.site-sidebar');
+		const sidebarTop = desktopSidebar
+			? Number.parseFloat(getComputedStyle(desktopSidebar).top)
+			: NaN;
+		const readingLine = Number.isFinite(sidebarTop) ? sidebarTop : window.innerHeight * 0.16;
+		let activeHeading = tocHeadings[0];
+
+		for (const heading of tocHeadings) {
+			if (heading.getBoundingClientRect().top <= readingLine + 1) activeHeading = heading;
+		}
+
+		setActiveTocHeading(activeHeading);
+	};
+
+	for (const link of tocLinks) {
+		link.addEventListener('click', () => {
+			const href = link.getAttribute('href');
+			const heading = href?.startsWith('#') ? document.getElementById(href.slice(1)) : null;
+			if (heading) setActiveTocHeading(heading);
+		});
+	}
+
+	updateActiveTocHeading();
+	window.addEventListener('scroll', updateActiveTocHeading, { passive: true });
+	window.addEventListener('resize', updateActiveTocHeading);
+</script>
+
+<style>
+	.post-contents h2 {
+		margin: 0 0 0.65rem;
+		font-size: 0.9rem;
+		font-weight: 650;
+		line-height: 1.35;
+	}
+
+	.post-contents ul {
+		display: grid;
+		gap: 0.2rem;
+		padding: 0 0 0 0.8rem;
+		margin: 0;
+		border-left: 1px solid var(--border);
+		list-style: none;
+	}
+
+	.post-contents a {
+		color: var(--muted);
+		font-size: 0.86rem;
+		line-height: 1.4;
+		text-decoration: none;
+	}
+
+	.post-contents a:hover {
+		color: var(--accent);
+		text-decoration: underline;
+	}
+
+	.post-contents a.is-active,
+	.post-contents a[aria-current='location'] {
+		color: var(--accent);
+		font-weight: 650;
+	}
+
+	.post-contents a:focus-visible,
+	.post-contents summary:focus-visible {
+		border-radius: 0.15rem;
+		outline: 2px solid var(--accent);
+		outline-offset: 0.2rem;
+	}
+
+	.post-contents-date {
+		padding-top: 0.75rem;
+		margin: 0.75rem 0 0;
+		border-top: 1px solid var(--border);
+		color: var(--muted);
+		font-size: 0.78rem;
+		line-height: 1.4;
+	}
+
+	.post-contents--mobile {
+		display: none;
+		padding: 0.65rem 0.8rem;
+		margin: 0 0 1.75rem;
+		border: 1px solid var(--border);
+		border-radius: 0.35rem;
+	}
+
+	.post-contents--mobile summary {
+		color: var(--text);
+		font-size: 0.9rem;
+		font-weight: 600;
+		cursor: pointer;
+	}
+
+	.post-contents--mobile nav {
+		padding-top: 0.65rem;
+	}
+
+	@media (max-width: 760px) {
+		.post-contents--mobile {
+			display: block;
+		}
+	}
+</style>
