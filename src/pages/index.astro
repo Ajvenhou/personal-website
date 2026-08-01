@@ -1,74 +1,103 @@
 ---
+import { getCollection, getEntry, render } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
+
+const pageIds = ['home', 'about', 'research', 'cv', 'links', 'contact'] as const;
+const entries = await Promise.all(pageIds.map((id) => getEntry('pages', id)));
+
+if (entries.some((entry) => !entry)) {
+	throw new Error('One or more required homepage content files are missing.');
+}
+
+const [home, about, research, cv, links, contact] = entries;
+const [HomeContent, AboutContent, ResearchContent, CvContent, LinksContent, ContactContent] =
+	await Promise.all(
+		[home, about, research, cv, links, contact].map(async (entry) => {
+			const { Content } = await render(entry!);
+			return Content;
+		}),
+	);
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const projects = await getCollection('projects');
+const dateFormatter = new Intl.DateTimeFormat('en-GB', {
+	day: 'numeric',
+	month: 'long',
+	year: 'numeric',
+});
 ---
 
 <Layout
-	title="Ivo Vinklárek | Personal Academic Website"
-	description="Personal academic website for Ivo Vinklárek."
+	title="Ivo S. Vinklárek | Personal Academic Website"
+	description="Personal academic website for Ivo S. Vinklárek."
 >
 	<main class="site-main">
 		<section id="welcome" class="site-section" aria-labelledby="welcome-heading">
-			<h1 id="welcome-heading">Welcome</h1>
-			<p>
-				This is the personal academic website of Ivo Vinklárek, a place for
-				research notes, projects, writing, and professional information.
-			</p>
+			<h1 id="welcome-heading">{home!.data.title}</h1>
+			<div class="prose"><HomeContent /></div>
 		</section>
 
 		<section id="about" class="site-section" aria-labelledby="about-heading">
-			<h2 id="about-heading">About</h2>
-			<p>
-				A short introduction about my academic path, research interests, and
-				the ideas that shape my scientific development will appear here.
-			</p>
+			<h2 id="about-heading">{about!.data.title}</h2>
+			<div class="prose"><AboutContent /></div>
 		</section>
 
 		<section id="research" class="site-section" aria-labelledby="research-heading">
-			<h2 id="research-heading">Research</h2>
-			<p>
-				This section will collect research interests, publications, ongoing
-				work, and notes on scientific questions I am exploring.
-			</p>
+			<h2 id="research-heading">{research!.data.title}</h2>
+			<div class="prose"><ResearchContent /></div>
 		</section>
 
 		<section id="projects" class="site-section" aria-labelledby="projects-heading">
 			<h2 id="projects-heading">Projects</h2>
-			<p>
-				Selected academic, technical, and personal projects will be listed
-				here with short descriptions and links where useful.
-			</p>
+			<ul class="entry-list">
+				{
+					projects.map((project) => (
+						<li>
+							<h3>
+								{project.data.title}
+								{project.data.draft && <span class="status-label">In progress</span>}
+							</h3>
+							<p class="entry-description">{project.data.description}</p>
+						</li>
+					))
+				}
+			</ul>
 		</section>
 
 		<section id="blog" class="site-section" aria-labelledby="blog-heading">
 			<h2 id="blog-heading">Blog</h2>
-			<p>
-				Notes and reflections on research, conferences, cycling, hiking,
-				travel, and other personal activities will be collected here.
-			</p>
+			<ul class="entry-list">
+				{
+					posts.map((post) => (
+						<li>
+							<h3>
+								<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+								{post.data.draft && <span class="status-label">Draft</span>}
+							</h3>
+							<p class="entry-meta">{dateFormatter.format(post.data.date)}</p>
+							<p class="entry-description">{post.data.description}</p>
+						</li>
+					))
+				}
+			</ul>
+			<a class="text-link" href="/blog/">View all blog posts</a>
 		</section>
 
 		<section id="cv" class="site-section" aria-labelledby="cv-heading">
-			<h2 id="cv-heading">CV</h2>
-			<p>
-				Education, academic experience, skills, publications, and professional
-				records will be summarized in this section.
-			</p>
+			<h2 id="cv-heading">{cv!.data.title}</h2>
+			<div class="prose"><CvContent /></div>
 		</section>
 
 		<section id="links" class="site-section" aria-labelledby="links-heading">
-			<h2 id="links-heading">Links</h2>
-			<p>
-				Useful websites, academic resources, profiles, and selected repository
-				links can be gathered here.
-			</p>
+			<h2 id="links-heading">{links!.data.title}</h2>
+			<div class="prose"><LinksContent /></div>
 		</section>
 
 		<section id="contact" class="site-section" aria-labelledby="contact-heading">
-			<h2 id="contact-heading">Contact</h2>
-			<p>
-				Contact information and preferred ways to get in touch will be added
-				here later.
-			</p>
+			<h2 id="contact-heading">{contact!.data.title}</h2>
+			<div class="prose"><ContactContent /></div>
 		</section>
 	</main>
 </Layout>
