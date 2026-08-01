@@ -1,14 +1,15 @@
 ---
 import { Image } from 'astro:assets';
-import type { GalleryImage } from '../data/blogImages';
+import type { BlogImageQuality, GalleryImage } from '../data/blogImages';
 
 interface Props {
 	images: GalleryImage[];
 	label?: string;
 	variant?: 'strip' | 'carousel';
+	quality?: BlogImageQuality;
 }
 
-const { images, label = 'Photo gallery', variant = 'strip' } = Astro.props;
+const { images, label = 'Photo gallery', variant = 'strip', quality = 'high' } = Astro.props;
 ---
 
 <section class:list={['image-gallery', `image-gallery--${variant}`]} aria-label={label} data-image-gallery data-variant={variant}>
@@ -47,7 +48,7 @@ const { images, label = 'Photo gallery', variant = 'strip' } = Astro.props;
 							alt={image.alt}
 							widths={[320, 480, 700]}
 							sizes="(max-width: 760px) 78vw, 480px"
-							quality="high"
+							quality={quality}
 							loading="lazy"
 							decoding="async"
 							class="image-gallery-preview"

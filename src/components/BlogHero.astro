@@ -1,24 +1,36 @@
 ---
 import { Image } from 'astro:assets';
+import type { BlogImageQuality } from '../data/blogImages';
 
 interface Props {
 	image: ImageMetadata;
 	alt: string;
 	position?: string;
 	title?: string;
+	titleAlignment?: 'lower-left' | 'center';
+	quality?: BlogImageQuality;
 }
 
-const { image, alt, position = 'center', title } = Astro.props;
+const { image, alt, position = 'center', title, titleAlignment = 'lower-left', quality = 'high' } = Astro.props;
 ---
 
-<div class:list={['blog-hero', { 'blog-hero--title-overlay': title }]} style={`--blog-hero-position: ${position}`}>
+<div
+	class:list={[
+		'blog-hero',
+		{
+			'blog-hero--title-overlay': title,
+			'blog-hero--title-center': title && titleAlignment === 'center',
+		},
+	]}
+	style={`--blog-hero-position: ${position}`}
+>
 	<div class="blog-hero-visual">
 		<Image
 			src={image}
 			alt={alt}
 			widths={[480, 700, 1024, 1400]}
 			sizes="(max-width: 760px) calc(100vw - 2.3rem), 700px"
-			quality="high"
+			quality={quality}
 			loading="eager"
 			fetchpriority="high"
 			class="blog-hero-image"
@@ -82,6 +94,17 @@ const { image, alt, position = 'center', title } = Astro.props;
 		line-height: 1.15;
 		letter-spacing: -0.015em;
 		text-wrap: balance;
+	}
+
+	.blog-hero--title-center .blog-hero-overlay {
+		align-items: center;
+		justify-content: center;
+		background: rgb(0 0 0 / 0.28);
+	}
+
+	.blog-hero--title-center .blog-hero-overlay h1 {
+		max-width: 24ch;
+		text-align: center;
 	}
 
 	@media (max-width: 760px) {
