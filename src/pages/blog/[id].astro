@@ -35,7 +35,7 @@ const formattedDate = new Intl.DateTimeFormat('en-GB', {
 	<main class="site-main">
 		<article>
 			<header class:list={['page-header', { 'page-header--overlay-title': hasOverlayTitle }]}>
-				<p><a class="text-link" href="/blog/">← Blog</a></p>
+				<p><a class="text-link blog-back-link" href="/blog/">← Back to Blog</a></p>
 				{!hasOverlayTitle && <h1>{post.data.title}</h1>}
 				<p class="page-date">
 					{formattedDate}
@@ -61,6 +61,24 @@ const formattedDate = new Intl.DateTimeFormat('en-GB', {
 </Layout>
 
 <style>
+	.blog-back-link {
+		color: var(--muted);
+	}
+
+	.blog-back-link:visited {
+		color: var(--muted);
+	}
+
+	.blog-back-link:hover {
+		color: var(--accent);
+	}
+
+	.blog-back-link:focus-visible {
+		border-radius: 0.15rem;
+		outline: 2px solid var(--accent);
+		outline-offset: 0.2rem;
+	}
+
 	.page-header--overlay-title {
 		margin-bottom: 0.85rem;
 	}

@@ -35,7 +35,7 @@ const dateFormatter = new Intl.DateTimeFormat('en-GB', {
 	title="Ivo S. Vinklárek | Personal Academic Website"
 	description="Personal academic website for Ivo S. Vinklárek."
 >
-	<main class="site-main">
+	<main class="site-main homepage-main">
 		<section id="welcome" class="site-section" aria-labelledby="welcome-heading">
 			<h1 id="welcome-heading">{home!.data.title}</h1>
 			<div class="prose"><HomeContent /></div>
@@ -118,3 +118,15 @@ const dateFormatter = new Intl.DateTimeFormat('en-GB', {
 		</section>
 	</main>
 </Layout>
+
+<style>
+	.homepage-main {
+		padding-bottom: 76vh;
+	}
+
+	@media (max-width: 760px) {
+		.homepage-main {
+			padding-bottom: clamp(4rem, 20vh, 8rem);
+		}
+	}
+</style>

@@ -101,8 +101,12 @@ const sectionLinks = [
 		</div>
 
 		<script>
+			const sidebar = document.querySelector('.site-sidebar');
 			const sidebarLinks = Array.from(
 				document.querySelectorAll('.site-sidebar .section-nav a[href^="#"]'),
+			);
+			const navigationLinks = Array.from(
+				document.querySelectorAll('.section-nav a[href^="#"]'),
 			);
 			const linkedSections = sidebarLinks
 				.map((link) => {
@@ -110,17 +114,10 @@ const sectionLinks = [
 					return href ? document.querySelector(href) : null;
 				})
 				.filter(Boolean);
+			let navigationTarget = null;
+			let navigationFrame = 0;
 
-			const updateActiveSection = () => {
-				const readingLine = window.innerHeight * 0.24;
-				let activeSection = linkedSections[0];
-
-				for (const section of linkedSections) {
-					if (section.getBoundingClientRect().top <= readingLine) {
-						activeSection = section;
-					}
-				}
-
+			const setActiveSection = (activeSection) => {
 				for (const link of sidebarLinks) {
 					const isActive = link.getAttribute('href') === `#${activeSection?.id}`;
 					link.classList.toggle('is-active', isActive);
@@ -132,9 +129,101 @@ const sectionLinks = [
 				}
 			};
 
+			const updateActiveSection = () => {
+				if (navigationTarget) {
+					setActiveSection(navigationTarget);
+					return;
+				}
+
+				const sidebarTop = sidebar ? Number.parseFloat(getComputedStyle(sidebar).top) : NaN;
+				const readingLine = Number.isFinite(sidebarTop) ? sidebarTop : window.innerHeight * 0.16;
+				let activeSection = linkedSections[0];
+
+				for (const section of linkedSections) {
+					if (section.getBoundingClientRect().top <= readingLine + 1) {
+						activeSection = section;
+					}
+				}
+
+				setActiveSection(activeSection);
+			};
+
+			const cancelNavigation = () => {
+				if (!navigationFrame) return;
+				window.cancelAnimationFrame(navigationFrame);
+				navigationFrame = 0;
+				navigationTarget = null;
+				updateActiveSection();
+			};
+
+			const scrollToSection = (target) => {
+				const scrollMargin = Number.parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+				const startPosition = window.scrollY;
+				const maximumPosition = document.documentElement.scrollHeight - window.innerHeight;
+				const targetPosition = Math.min(
+					Math.max(startPosition + target.getBoundingClientRect().top - scrollMargin, 0),
+					maximumPosition,
+				);
+				const distance = targetPosition - startPosition;
+				const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+				navigationTarget = target;
+				setActiveSection(target);
+
+				if (reduceMotion || Math.abs(distance) < 1) {
+					window.scrollTo({ top: targetPosition, behavior: 'auto' });
+					navigationTarget = null;
+					updateActiveSection();
+					return;
+				}
+
+				const duration = 320;
+				let startTime;
+				const step = (currentTime) => {
+					startTime ??= currentTime;
+					const progress = Math.min((currentTime - startTime) / duration, 1);
+					const easedProgress = 1 - Math.pow(1 - progress, 3);
+					window.scrollTo({ top: startPosition + distance * easedProgress, behavior: 'auto' });
+
+					if (progress < 1) {
+						navigationFrame = window.requestAnimationFrame(step);
+						return;
+					}
+
+					navigationFrame = 0;
+					navigationTarget = null;
+					updateActiveSection();
+				};
+
+				navigationFrame = window.requestAnimationFrame(step);
+			};
+
+			for (const link of navigationLinks) {
+				link.addEventListener('click', (event) => {
+					if (
+						event instanceof MouseEvent &&
+						(event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+					) return;
+
+					const href = link.getAttribute('href');
+					const target = href?.startsWith('#') ? document.getElementById(href.slice(1)) : null;
+					if (!href || !target) return;
+
+					event.preventDefault();
+					cancelNavigation();
+					if (window.location.hash !== href) history.pushState(null, '', href);
+					scrollToSection(target);
+				});
+			}
+
 			updateActiveSection();
 			window.addEventListener('scroll', updateActiveSection, { passive: true });
-			window.addEventListener('resize', updateActiveSection);
+			window.addEventListener('wheel', cancelNavigation, { passive: true });
+			window.addEventListener('touchstart', cancelNavigation, { passive: true });
+			window.addEventListener('resize', () => {
+				cancelNavigation();
+				updateActiveSection();
+			});
 		</script>
 	</body>
 </html>
@@ -169,6 +258,7 @@ const sectionLinks = [
 
 	html {
 		background: var(--background);
+		scroll-behavior: auto;
 	}
 
 	body {
@@ -219,7 +309,7 @@ const sectionLinks = [
 	.site-section {
 		padding: 0;
 		margin: 0 0 3rem;
-		scroll-margin-top: 1.5rem;
+		scroll-margin-top: var(--sidebar-top);
 	}
 
 	.site-section:last-child {
@@ -570,6 +660,7 @@ const sectionLinks = [
 
 		.site-section {
 			margin-bottom: 2.65rem;
+			scroll-margin-top: 1.5rem;
 		}
 
 		.site-section h1 {
@@ -598,6 +689,12 @@ const sectionLinks = [
 
 		.site-sidebar {
 			margin-left: 0;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		html {
+			scroll-behavior: auto;
 		}
 	}
 </style>
