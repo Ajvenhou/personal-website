@@ -31,8 +31,16 @@ const { images, label = 'Photo gallery', variant = 'strip', quality = 'high' } =
 		{
 			images.map((image) => {
 				const originalSource = typeof image.original === 'string' ? image.original : image.original.src;
+				const aspectRatio = image.preview.width / image.preview.height;
+				const orientation = aspectRatio < 1 ? 'portrait' : aspectRatio > 1 ? 'landscape' : 'square';
+				const desktopSlideWidth = Math.min(aspectRatio * 23, 36);
+				const mobileSlideWidth = Math.min(aspectRatio * 18, 30);
 
-				return <figure class="image-gallery-item" data-gallery-item>
+				return <figure
+					class:list={['image-gallery-item', `image-gallery-item--${orientation}`]}
+					style={`--gallery-image-ratio: ${image.preview.width} / ${image.preview.height}; --gallery-slide-width: ${desktopSlideWidth}rem; --gallery-slide-width-mobile: ${mobileSlideWidth}rem;`}
+					data-gallery-item
+				>
 					<button
 						type="button"
 						class="image-gallery-trigger"
@@ -321,18 +329,20 @@ const { images, label = 'Photo gallery', variant = 'strip', quality = 'high' } =
 	}
 
 	.image-gallery--carousel .image-gallery-item {
-		flex-basis: 84%;
+		flex-basis: auto;
+		width: min(var(--gallery-slide-width), 84%);
 		min-width: 0;
 		scroll-snap-align: center;
 	}
 
 	.image-gallery--carousel .image-gallery-trigger {
-		display: flex;
-		align-items: center;
-		justify-content: center;
+		display: block;
 		width: 100%;
-		height: clamp(16rem, 52vw, 23rem);
+		height: auto;
+		max-height: 23rem;
 		overflow: hidden;
+		aspect-ratio: var(--gallery-image-ratio);
+		background: transparent;
 	}
 
 	.image-gallery--carousel .image-gallery-preview {
@@ -484,11 +494,11 @@ const { images, label = 'Photo gallery', variant = 'strip', quality = 'high' } =
 		}
 
 		.image-gallery--carousel .image-gallery-item {
-			flex-basis: 82%;
+			width: min(var(--gallery-slide-width-mobile), 82vw);
 		}
 
 		.image-gallery--carousel .image-gallery-trigger {
-			height: clamp(14rem, 76vw, 18rem);
+			max-height: 18rem;
 		}
 
 		.image-gallery-control {

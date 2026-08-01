@@ -1,3 +1,11 @@
+import cyclingHero from '../assets/images/blog/2026-06-05-schleswig-holstein/00-landscape-busum.jpeg';
+import cyclingBurg from '../assets/images/blog/2026-06-05-schleswig-holstein/01-burg.jpeg';
+import cyclingEveningBurg from '../assets/images/blog/2026-06-05-schleswig-holstein/02-evening-burg.jpeg';
+import cyclingLakeView from '../assets/images/blog/2026-06-05-schleswig-holstein/05-lake-view.jpeg';
+import cyclingNorthSeaVisit from '../assets/images/blog/2026-06-05-schleswig-holstein/06-north-sea-visit.jpeg';
+import cyclingCanalBridge from '../assets/images/blog/2026-06-05-schleswig-holstein/07-channel-bridge-view.jpeg';
+import cyclingHamburg from '../assets/images/blog/2026-06-05-schleswig-holstein/08-hamburg.jpeg';
+
 import zugspitzeHero from '../assets/images/blog/2026-06-20-Zugspitze/hero-original.jpeg';
 import zugspitzeHeroPreview from '../assets/images/blog/2026-06-20-Zugspitze/hero-00.jpeg';
 import zugspitzeMap from '../assets/images/blog/2026-06-20-Zugspitze/map-01.jpeg';
@@ -103,7 +111,7 @@ export const blogMediaByPostId: Record<string, BlogMedia> = {
 	'2026-06-05-schleswig-holstein': {
 		hero: {
 			image: cyclingHero,
-			alt: 'A bicycle resting beside a North Sea landscape in Schleswig-Holstein.',
+			alt: 'The flat coastal landscape near Büsum under a wide sky.',
 			position: 'center 52%',
 			title: 'Up to the North Sea through Schleswig-Holstein',
 			titleAlignment: 'center',
@@ -114,8 +122,8 @@ export const blogMediaByPostId: Record<string, BlogMedia> = {
 				order: 0,
 				preview: cyclingHero,
 				original: cyclingHero,
-				alt: 'A bicycle resting beside a North Sea landscape in Schleswig-Holstein.',
-				caption: 'Cycling through Schleswig-Holstein',
+				alt: 'The flat coastal landscape near Büsum under a wide sky.',
+				caption: 'The landscape near Büsum',
 			},
 			{
 				order: 1,
@@ -140,10 +148,10 @@ export const blogMediaByPostId: Record<string, BlogMedia> = {
 			},
 			{
 				order: 6,
-				preview: cyclingBusum,
-				original: cyclingBusum,
-				alt: 'The flat coastal landscape near Büsum under a wide sky.',
-				caption: 'The landscape near Büsum',
+				preview: cyclingNorthSeaVisit,
+				original: cyclingNorthSeaVisit,
+				alt: 'A stop beside the North Sea during the cycling trip through Schleswig-Holstein.',
+				caption: 'At the North Sea',
 			},
 			{
 				order: 7,
@@ -446,10 +454,3 @@ export const blogMediaByPostId: Record<string, BlogMedia> = {
 		galleryVariant: 'carousel',
 	},
 };
-import cyclingHero from '../assets/images/blog/2026-06-05-schleswig-holstein/00-hero.jpeg';
-import cyclingBurg from '../assets/images/blog/2026-06-05-schleswig-holstein/01-burg.jpeg';
-import cyclingEveningBurg from '../assets/images/blog/2026-06-05-schleswig-holstein/02-evening-burg.jpeg';
-import cyclingLakeView from '../assets/images/blog/2026-06-05-schleswig-holstein/05-lake-view.jpeg';
-import cyclingBusum from '../assets/images/blog/2026-06-05-schleswig-holstein/06-landscape-busum.jpeg';
-import cyclingCanalBridge from '../assets/images/blog/2026-06-05-schleswig-holstein/07-channel-bridge-view.jpeg';
-import cyclingHamburg from '../assets/images/blog/2026-06-05-schleswig-holstein/08-hamburg.jpeg';
