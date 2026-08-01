@@ -1,5 +1,5 @@
 ---
-title: An expedition to Zugspitze
+title: An one-day expedition to Zugspitze
 description: A short story about an expedition up to the Zugspitze summit and notes for the future.
 date: 2026-06-20
 draft: true
