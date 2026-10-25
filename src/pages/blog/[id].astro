@@ -38,7 +38,7 @@ const formattedDate = new Intl.DateTimeFormat('en-GB', {
 	year: 'numeric',
 }).format(post.data.date);
 const meaningfulSectionTitles = new Set(
-	post.body
+	(post.body ?? '')
 		.split(/^##\s+/m)
 		.slice(1)
 		.map((section) => {
