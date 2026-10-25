@@ -2,7 +2,11 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 const pages = defineCollection({
-	loader: glob({ base: './src/content', pattern: '*.md' }),
+	loader: glob({
+		base: './src/content',
+		pattern: ['*.md', 'cv/*.md'],
+		generateId: ({ entry }) => entry.replace(/^cv\//, '').replace(/\.md$/, ''),
+	}),
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),

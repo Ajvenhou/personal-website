@@ -3,6 +3,9 @@ title: Curriculum Vitae
 description: Education, research experience, awards, supervision, and academic service.
 ---
 
+Since 2022, I have worked as a postdoctoral researcher at the Center for Free-Electron Laser
+Science (CFEL), Deutsches Elektronen-Synchrotron DESY, Hamburg.
+
 ## Education
 
 - **2018–2022 — Ph.D. in Chemical Physics**, Faculty of Mathematics and Physics, Charles
@@ -21,6 +24,7 @@ description: Education, research experience, awards, supervision, and academic s
 
 ## Awards, honors, and fellowships
 
+- **2026 — Poster Prize**, Summer School on Chemical Dynamics, Hangzhou, China.
 - **2023–2025 — Humboldt Research Fellowship**, Alexander von Humboldt Foundation. Project:
   *Ultrafast photodynamics of halomethanes in deflected hetero-aggregates: Open gate to elementary
   processes in atmosphere*.
@@ -54,7 +58,7 @@ description: Education, research experience, awards, supervision, and academic s
   of an STM scanner for simultaneous STM/AFM measurement*. Supervisor: Ivan Ošťádal.
 
 ## Academic service and public engagement
-
+- **2026** – Member of JČMF (Jednoty Českých Matematiků a Fyziků)
 - **2024** — Co-organizer of the
   [Timepix VMI Workshop](https://indico.desy.de/event/44280/overview), organized by Hubertus
   Bromberger.
@@ -63,15 +67,4 @@ description: Education, research experience, awards, supervision, and academic s
   rural pubs.
 - **2012–2016** — FYKOS, Charles University's physics correspondence competition for high-school
   students; lecturer and manager of week-long student camps.
-
-## Scientific interests and technical expertise
-
-Photophysics and photochemistry; molecular clusters; spectroscopy and laser techniques; mass
-spectrometry and velocity-map imaging; supersonic expansion; heterogeneous chemistry;
-singlet–triplet dynamics; halogenated compounds; singlet oxygen; and polycyclic aromatic
-hydrocarbons.
-
-Technical experience includes endstations for controlled molecular beams, electrostatic
-deflectors, ultrafast pump–probe techniques, UV and IR laser spectroscopy, VMI apparatus design,
-the Cluster Beam apparatus (CLUB), the Apparatus for Imaging (AIM), vacuum technology, ion and
-electron mass spectrometers, and transient absorption spectroscopy.
+- Peer reviewer for scientific journals.
