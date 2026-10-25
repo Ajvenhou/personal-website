@@ -1,5 +1,5 @@
 ---
-title: Project 1
+title: Ultrafast dynamics in water environment
 description: Short project description.
 draft: true
 ---
