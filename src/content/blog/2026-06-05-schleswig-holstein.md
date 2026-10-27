@@ -57,11 +57,7 @@ were not so lucky and when we arrived there was high tide. Anyway, we used the t
 sea and enjoyed views at the North Sea. It is something that we back home as a landlocked country miss
 more than anything.
 
-
 ## Quick notes
-
-
-
-
+- What about to go next time to [Nordkap](https://de.wikipedia.org/wiki/Nordkap)?
 
 ## Photos

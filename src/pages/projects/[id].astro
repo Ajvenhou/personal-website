@@ -1,0 +1,40 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BackLink from '../../components/BackLink.astro';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+	const projects = await getCollection('projects');
+
+	return projects.map((project) => ({
+		params: { id: project.id },
+		props: { project },
+	}));
+}
+
+interface Props {
+	project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<Layout
+	title={`${project.data.title} | Ivo S. Vinklárek`}
+	description={project.data.description}
+>
+	<main class="site-main">
+		<article>
+			<header class="page-header">
+				<p><BackLink href="/#projects" label="← Back to Projects" /></p>
+				<h1>
+					{project.data.title}
+					{project.data.draft && <span class="status-label">In progress</span>}
+				</h1>
+				<p class="page-description">{project.data.description}</p>
+			</header>
+			<div class="prose"><Content /></div>
+		</article>
+	</main>
+</Layout>

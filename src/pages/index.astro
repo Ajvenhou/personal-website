@@ -58,7 +58,7 @@ const dateFormatter = new Intl.DateTimeFormat('en-GB', {
 					projects.map((project) => (
 						<li>
 							<h3>
-								{project.data.title}
+								<a href={`/projects/${project.id}/`}>{project.data.title}</a>
 								{project.data.draft && <span class="status-label">In progress</span>}
 							</h3>
 							<p class="entry-description">{project.data.description}</p>
